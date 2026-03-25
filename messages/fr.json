@@ -1,0 +1,150 @@
+{
+  "Navigation": {
+    "home": "Accueil",
+    "services": "Services",
+    "contact": "Contact",
+    "about": "À propos",
+    "projects": "Projets",
+    "team": "Équipe",
+    "startProject": "Lancer un Projet"
+  },
+  "Hero": {
+    "badge": "Kashf Production · Disponible pour vos projets",
+    "titleLine1": "Rendez Votre",
+    "titleLine2": "Visible.",
+    "word1": "Vision",
+    "word2": "Marque",
+    "word3": "Histoire",
+    "word4": "Voix",
+    "subtitle": "Nous transformons les idées en contenu qui connecte — vidéo, audio, design graphique et web, conçu pour les marques qui veulent se démarquer en Afrique du Nord et au-delà.",
+    "cta": "Découvrir Nos Services",
+    "ctaSecondary": "Voir Nos Réalisations",
+    "scrollHint": "Défiler pour explorer",
+    "pillVideo": "Production Vidéo",
+    "pillAudio": "Audio",
+    "pillDesign": "Design Graphique",
+    "pillWeb": "Dév. Web",
+    "pillPacks": "Packs"
+  },
+  "About": {
+    "label": "À Propos de Kashf",
+    "titleLine1": "Nous ne faisons pas que",
+    "titleLine2": "créer du contenu.",
+    "titleLine3": "Nous révélons votre histoire.",
+    "body1": "Kashf (كشف) signifie révélation — le moment où quelque chose de caché devient clair. Nous découvrons la voix authentique de chaque personne, marque ou projet et la rendons puissamment visible en ligne.",
+    "body2": "Basés en Tunisie, opérant à l'international. Nous servons nos clients en arabe, français et anglais — en vidéo, audio, design et web — en services individuels ou en packs de production intégrés.",
+    "founded": "Fondée",
+    "languages": "Langues",
+    "countries": "Pays",
+    "tagArabic": "Arabe",
+    "tagFrench": "Français",
+    "tagEnglish": "Anglais",
+    "tagBased": "Basés en Tunisie",
+    "tagGlobal": "Portée mondiale",
+    "tagSince": "Depuis 2019",
+    "orbitalProduction": "Production",
+    "orbitalVideo": "Vidéo",
+    "orbitalAudio": "Audio",
+    "orbitalDesign": "Design",
+    "orbitalWeb": "Web"
+  },
+  "Services": {
+    "label": "Ce Que Nous Faisons",
+    "title": "Nos Services",
+    "subtitle": "Disponibles individuellement ou en packs de production intégrés — d'un seul livrable à des campagnes complètes.",
+    "video": "Production Vidéo",
+    "video_desc": "Courts-métrages, documentaires, films de marque et reels pour les réseaux sociaux — des visuels qui touchent.",
+    "audio": "Production Audio",
+    "audio_desc": "Podcasts, voix off, jingles et design sonore complet. Votre message, parfaitement entendu.",
+    "graphics": "Design Graphique",
+    "graphics_desc": "Logos, identités visuelles, contenus pour les réseaux sociaux et supports print mémorables.",
+    "web": "Développement Web",
+    "web_desc": "Sites modernes, rapides et accessibles — des landing pages aux plateformes e-commerce complètes.",
+    "requestQuote": "Demander un devis",
+    "packsTitle": "Packs de Production",
+    "packsDesc": "Combinez vidéo, audio, design et web en packages de marque cohérents. Meilleurs résultats, meilleur rapport qualité-prix — construits autour de vos objectifs.",
+    "packsCta": "Obtenir un Pack Sur Mesure →"
+  },
+  "Stats": {
+    "projects": "Projets Livrés",
+    "clients": "Clients Satisfaits",
+    "years": "Années d'Expertise",
+    "languages": "Langues"
+  },
+  "Projects": {
+    "label": "Portfolio",
+    "title": "Réalisations",
+    "seeAll": "Voir tous les projets",
+    "featured": "À la une"
+  },
+  "Clients": {
+    "label": "La Confiance de Nos Clients et Partenaires"
+  },
+  "WhyUs": {
+    "label": "Pourquoi Nous Choisir",
+    "title": "Fondamentalement Différent",
+    "item1Title": "Multilingue par Défaut",
+    "item1Desc": "Nous livrons en arabe, français et anglais — touchant des audiences en Afrique du Nord, en Europe et au-delà. Aucune traduction nécessaire.",
+    "item2Title": "Production de Bout en Bout",
+    "item2Desc": "De la stratégie et du script à la livraison finale, nous gérons chaque étape. Une équipe. Une vision. Zéro rupture.",
+    "item3Title": "Rapide et Transparent",
+    "item3Desc": "Délais serrés ? Notre équipe excelle. Rapidité, qualité et communication honnête — à chaque fois, sans compromis."
+  },
+  "Process": {
+    "label": "Notre Méthode",
+    "title": "Notre Processus",
+    "step1Title": "Découvrir",
+    "step1Desc": "Immersion dans votre marque, vos objectifs et votre audience pour élaborer la bonne stratégie.",
+    "step2Title": "Créer",
+    "step2Desc": "La production commence — scripts, visuels, audio, code — le tout sous un même toit.",
+    "step3Title": "Affiner",
+    "step3Desc": "Des retours collaboratifs pour peaufiner chaque détail jusqu'à la perfection.",
+    "step4Title": "Lancer",
+    "step4Desc": "Livraison finale, accompagnement de publication et suivi des performances."
+  },
+  "Team": {
+    "label": "Les Personnes",
+    "title": "Notre Équipe",
+    "join": "Nous grandissons. Passionné par le contenu ?",
+    "joinLink": "Rejoignez l'équipe →"
+  },
+  "Testimonial": {
+    "quote": "Kashf a transformé notre présence de marque en Afrique du Nord. L'approche multilingue et l'attention aux détails de l'équipe sont inégalées.",
+    "author": "Ahmed Benali",
+    "role": "PDG, Atlas Group"
+  },
+  "Contact": {
+    "label": "Contactez-Nous",
+    "title": "Prêt à devenir",
+    "titleHighlight": "visible ?",
+    "subtitle": "Parlez-nous de votre projet — nous vous répondrons sous 24 heures avec une proposition sur mesure adaptée à vos objectifs et votre budget.",
+    "emailLabel": "Email",
+    "emailValue": "hello@kashf.tn",
+    "locationLabel": "Localisation",
+    "locationValue": "Tunis, Tunisie",
+    "languagesLabel": "Langues",
+    "languagesValue": "AR · FR · EN",
+    "responseLabel": "Temps de réponse",
+    "responseValue": "Sous 24h",
+    "followAlong": "Suivez-Nous",
+    "formTitle": "Démarrer une Conversation",
+    "name": "Votre nom *",
+    "email": "Adresse email *",
+    "service": "Choisir un service",
+    "serviceVideo": "Production Vidéo",
+    "serviceAudio": "Production Audio",
+    "serviceDesign": "Design Graphique",
+    "serviceWeb": "Développement Web",
+    "servicePack": "Pack de Production",
+    "serviceOther": "Autre / Pas sûr",
+    "message": "Parlez-nous de votre projet... *",
+    "send": "Envoyer le Message",
+    "disclaimer": "Nous répondons sous 24 heures · Jamais de spam",
+    "successTitle": "Message Envoyé !",
+    "successDesc": "Nous vous répondrons sous 24 heures. Consultez votre boîte de réception !",
+    "sendAnother": "Envoyer un Autre"
+  },
+  "Footer": {
+    "rights": "© {year} Kashf Production. Tous droits réservés."
+  }
+}
