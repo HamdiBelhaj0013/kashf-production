@@ -75,10 +75,17 @@
     "label": "Portfolio",
     "title": "Réalisations",
     "seeAll": "Voir tous les projets",
-    "featured": "À la une"
+    "featured": "À la une",
+    "filterAll": "Tout",
+    "filterVideo": "Vidéo",
+    "filterAudio": "Audio",
+    "filterDesign": "Design",
+    "filterWeb": "Web",
+    "filterPack": "Packs"
   },
   "Clients": {
-    "label": "La Confiance de Nos Clients et Partenaires"
+    "label": "La Confiance de Nos Clients et Partenaires",
+    "title": "Clients & Partenaires"
   },
   "WhyUs": {
     "label": "Pourquoi Nous Choisir",

@@ -75,10 +75,17 @@
     "label": "Portfolio",
     "title": "Selected Work",
     "seeAll": "See all projects",
-    "featured": "Featured"
+    "featured": "Featured",
+    "filterAll": "All",
+    "filterVideo": "Video",
+    "filterAudio": "Audio",
+    "filterDesign": "Design",
+    "filterWeb": "Web",
+    "filterPack": "Packs"
   },
   "Clients": {
-    "label": "Trusted by Clients & Partners"
+    "label": "Trusted by Clients & Partners",
+    "title": "Clients & Partners"
   },
   "WhyUs": {
     "label": "Why Choose Us",

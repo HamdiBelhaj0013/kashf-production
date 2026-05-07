@@ -75,10 +75,17 @@
     "label": "معرض الأعمال",
     "title": "أعمال مختارة",
     "seeAll": "مشاهدة جميع الأعمال",
-    "featured": "مميَّز"
+    "featured": "مميَّز",
+    "filterAll": "الكل",
+    "filterVideo": "فيديو",
+    "filterAudio": "صوت",
+    "filterDesign": "تصميم",
+    "filterWeb": "ويب",
+    "filterPack": "باقات"
   },
   "Clients": {
-    "label": "يثق بنا عملاء وشركاء من مختلف القطاعات"
+    "label": "يثق بنا عملاء وشركاء من مختلف القطاعات",
+    "title": "العملاء والشركاء"
   },
   "WhyUs": {
     "label": "لماذا كشف؟",
