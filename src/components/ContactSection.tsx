@@ -16,11 +16,31 @@ export default function ContactSection() {
   const t = useTranslations("Contact");
   const [form, setForm] = useState({ name: "", email: "", service: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
-    setSubmitted(true);
+    setSubmitting(true);
+    setSubmitError("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        setSubmitError(data.error || "Something went wrong. Please try again.");
+      }
+    } catch {
+      setSubmitError("Network error. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -185,14 +205,19 @@ export default function ContactSection() {
                       className={inputClass + " resize-none"}
                     />
 
+                    {submitError && (
+                      <p className="text-red-500 text-sm text-center">{submitError}</p>
+                    )}
+
                     <motion.button
                       type="submit"
+                      disabled={submitting}
                       whileHover={{ scale: 1.01 }}
                       whileTap={{ scale: 0.99 }}
-                      className="w-full py-4 bg-gray-900 text-white font-bold rounded-xl text-sm tracking-wide hover:bg-gray-800 transition-colors flex items-center justify-center gap-2 shadow-md"
+                      className="w-full py-4 bg-gray-900 text-white font-bold rounded-xl text-sm tracking-wide hover:bg-gray-800 transition-colors flex items-center justify-center gap-2 shadow-md disabled:opacity-60"
                     >
-                      {t("send")}
-                      <Send className="w-4 h-4" />
+                      {submitting ? "Sending…" : t("send")}
+                      {!submitting && <Send className="w-4 h-4" />}
                     </motion.button>
 
                     <div className="flex items-center justify-center gap-2 text-[11px] text-gray-400">

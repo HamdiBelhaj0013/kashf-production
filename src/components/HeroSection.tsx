@@ -61,15 +61,40 @@ export default function HeroSection() {
     { Icon: Package,      label: t("Hero.pillPacks")  },
   ];
 
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
     <section className="relative w-full min-h-screen flex flex-col items-center justify-center px-6 text-center pt-28 pb-24 overflow-hidden bg-white">
 
-      {/* ── Dot-grid background (PROTECTED — do not remove) ───────────────── */}
+      {/* Base dot grid — always visible */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: "radial-gradient(circle, #e5e7eb 1px, transparent 1px)",
-          backgroundSize: "30px 30px",
+          backgroundImage: "radial-gradient(circle, #64748b 2px, transparent 2px)",
+          backgroundSize: "40px 40px",
+          opacity: 0.35,
+          animation: "dotPulse 4s ease-in-out infinite",
+        }}
+      />
+
+      {/* Spotlight — dark dots follow cursor smoothly */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(circle, #0f172a 2px, transparent 2px)",
+          backgroundSize: "40px 40px",
+          maskImage: `radial-gradient(ellipse 500px 500px at ${mousePos.x}px ${mousePos.y}px, black 0%, transparent 70%)`,
+          WebkitMaskImage: `radial-gradient(ellipse 500px 500px at ${mousePos.x}px ${mousePos.y}px, black 0%, transparent 70%)`,
+          opacity: 0.7,
+          transition: "mask-image 0.05s ease, -webkit-mask-image 0.05s ease",
         }}
       />
 

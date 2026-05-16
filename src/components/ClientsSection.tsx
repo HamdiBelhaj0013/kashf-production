@@ -1,8 +1,35 @@
 "use client";
 
+import { useState } from "react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { AnimatedSection } from "@/components/AnimatedSection";
 import type { Client } from "@/data/clients";
+
+function ClientLogoItem({ client }: { client: Client }) {
+  const [imgError, setImgError] = useState(false);
+
+  if (client.logo && !imgError) {
+    return (
+      <div className="flex items-center justify-center h-12 w-32 flex-shrink-0 cursor-default select-none">
+        <Image
+          src={client.logo}
+          alt={client.name}
+          width={120}
+          height={48}
+          className="object-contain max-h-12 w-auto grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+          onError={() => setImgError(true)}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <span className="text-gray-300 font-black text-lg tracking-tight whitespace-nowrap hover:text-gray-900 transition-colors cursor-default select-none">
+      {client.name}
+    </span>
+  );
+}
 
 export default function ClientsSection({ clients }: { clients: Client[] }) {
   const t = useTranslations("Clients");
@@ -37,12 +64,7 @@ export default function ClientsSection({ clients }: { clients: Client[] }) {
         />
         <div className="flex gap-14 items-center animate-marquee-left py-2">
           {row1.map((c, i) => (
-            <span
-              key={`r1-${c.id}-${i}`}
-              className="text-gray-300 font-black text-lg tracking-tight whitespace-nowrap hover:text-gray-900 transition-colors cursor-default select-none"
-            >
-              {c.name}
-            </span>
+            <ClientLogoItem key={`r1-${c.id}-${i}`} client={c} />
           ))}
         </div>
       </div>
@@ -59,12 +81,7 @@ export default function ClientsSection({ clients }: { clients: Client[] }) {
         />
         <div className="flex gap-14 items-center animate-marquee-right py-2">
           {row2.map((c, i) => (
-            <span
-              key={`r2-${c.id}-${i}`}
-              className="text-gray-300 font-black text-lg tracking-tight whitespace-nowrap hover:text-gray-900 transition-colors cursor-default select-none"
-            >
-              {c.name}
-            </span>
+            <ClientLogoItem key={`r2-${c.id}-${i}`} client={c} />
           ))}
         </div>
       </div>
