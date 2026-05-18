@@ -19,7 +19,9 @@
       "Bash(pkill -f \"next start\")",
       "Bash(npm install:*)",
       "Bash(xargs grep:*)",
-      "Bash(node -e ':*)"
+      "Bash(node -e ':*)",
+      "Bash(find:*)",
+      "Bash(node:*)"
     ]
   }
 }

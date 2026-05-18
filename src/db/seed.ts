@@ -1,18 +1,7 @@
-import { db, admin, projects, clients, team, settings } from "./index";
-import bcrypt from "bcryptjs";
+import { db, projects, clients, team, settings } from "./index";
 
 async function seed() {
   console.log("Seeding database...");
-
-  // Admin user
-  const existingAdmin = await db.select().from(admin).limit(1);
-  if (existingAdmin.length === 0) {
-    const hash = await bcrypt.hash("kashf2024admin", 12);
-    await db.insert(admin).values({ username: "admin", password: hash });
-    console.log("✓ Admin created: admin / kashf2024admin");
-  } else {
-    console.log("✓ Admin already exists");
-  }
 
   // Default settings
   const defaultSettings = [
