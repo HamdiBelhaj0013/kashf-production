@@ -4,15 +4,21 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { Menu, X, ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 const NAV_LINKS = ["about", "services", "projects", "team", "contact"] as const;
 type NavLink = (typeof NAV_LINKS)[number];
+
+// Intrinsic logo dimensions (413×297 px original)
+const LOGO_W = 413;
+const LOGO_H = 297;
 
 export default function Header() {
   const t = useTranslations();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<NavLink | null>(null);
+  const [logoError, setLogoError] = useState(false);
 
   // Scroll detection for sticky style
   useEffect(() => {
@@ -50,26 +56,22 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         {/* Logo */}
         <a href="#" className="flex items-center gap-2 shrink-0">
-          <img
-            src="/kashf version noir (1).png"
-            alt="Kashf Production"
-            className="h-10 w-auto object-contain"
-            onError={(e) => {
-              const el = e.currentTarget;
-              el.style.display = "none";
-              const wrap = document.createElement("div");
-              wrap.className = "flex items-center gap-1.5";
-              const k = document.createElement("span");
-              k.className = "font-black text-xl tracking-tighter text-gray-900";
-              k.textContent = "KASHF";
-              const p = document.createElement("span");
-              p.className = "text-gray-400 font-light text-sm";
-              p.textContent = "Production";
-              wrap.appendChild(k);
-              wrap.appendChild(p);
-              el.parentNode?.appendChild(wrap);
-            }}
-          />
+          {logoError ? (
+            <div className="flex items-center gap-1.5">
+              <span className="font-black text-xl tracking-tighter text-gray-900">KASHF</span>
+              <span className="text-gray-400 font-light text-sm">Production</span>
+            </div>
+          ) : (
+            <Image
+              src="/kashf version noir (1).png"
+              alt="Kashf Production"
+              width={LOGO_W}
+              height={LOGO_H}
+              className="h-10 w-auto object-contain"
+              priority
+              onError={() => setLogoError(true)}
+            />
+          )}
         </a>
 
         {/* Desktop nav */}

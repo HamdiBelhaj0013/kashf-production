@@ -1,5 +1,5 @@
-import { db, projects, clients, team } from "@/db";
-import { eq, asc } from "drizzle-orm";
+import { db, projects, clients, team, settings } from "@/db";
+import { eq, asc, inArray } from "drizzle-orm";
 import type { Project } from "@/data/projects";
 import type { Client } from "@/data/clients";
 import type { TeamMember } from "@/data/team";
@@ -66,5 +66,28 @@ export async function getTeam(): Promise<TeamMember[]> {
   } catch {
     const { team: staticTeam } = await import("@/data/team");
     return staticTeam;
+  }
+}
+
+export interface SocialLinks {
+  instagram: string;
+  linkedin: string;
+  behance: string;
+}
+
+export async function getSocialLinks(): Promise<SocialLinks> {
+  try {
+    const rows = await db
+      .select()
+      .from(settings)
+      .where(inArray(settings.key, ["social_instagram", "social_linkedin", "social_behance"]));
+    const map = Object.fromEntries(rows.map((r) => [r.key, r.value]));
+    return {
+      instagram: map.social_instagram ?? "",
+      linkedin:  map.social_linkedin  ?? "",
+      behance:   map.social_behance   ?? "",
+    };
+  } catch {
+    return { instagram: "", linkedin: "", behance: "" };
   }
 }

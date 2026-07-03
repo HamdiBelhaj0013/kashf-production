@@ -1,14 +1,32 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { ExternalLink } from "lucide-react";
 import { Link } from "@/i18n/routing";
+import { ExternalLink } from "lucide-react";
+import Image from "next/image";
+import type { SocialLinks } from "@/lib/api";
 
-export default function FooterSection() {
+interface FooterSectionProps {
+  socialLinks: SocialLinks;
+}
+
+const LOGO_W = 413;
+const LOGO_H = 297;
+
+export default function FooterSection({ socialLinks }: FooterSectionProps) {
   const t = useTranslations("Footer");
   const year = new Date().getFullYear();
+  const [logoError, setLogoError] = useState(false);
 
   const navLinks = ["about", "services", "projects", "team", "contact"] as const;
+
+  // Only render social entries whose URL is non-empty
+  const socials = [
+    { label: "Instagram", url: socialLinks.instagram },
+    { label: "LinkedIn",  url: socialLinks.linkedin  },
+    { label: "Behance",   url: socialLinks.behance   },
+  ].filter((s) => s.url.trim() !== "");
 
   return (
     <footer className="w-full bg-gray-900 text-white py-14 relative overflow-hidden">
@@ -25,20 +43,19 @@ export default function FooterSection() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-10">
           {/* Logo */}
           <div>
-            <img
-              src="/kashf version noir (1).png"
-              alt="Kashf Production"
-              className="h-8 w-auto object-contain"
-              style={{ filter: "invert(1)" }}
-              onError={(e) => {
-                const el = e.currentTarget;
-                el.style.display = "none";
-                const span = document.createElement("span");
-                span.className = "font-black text-2xl tracking-tighter text-white";
-                span.textContent = "KASHF";
-                el.parentNode?.appendChild(span);
-              }}
-            />
+            {logoError ? (
+              <span className="font-black text-2xl tracking-tighter text-white">KASHF</span>
+            ) : (
+              <Image
+                src="/kashf version noir (1).png"
+                alt="Kashf Production"
+                width={LOGO_W}
+                height={LOGO_H}
+                className="h-8 w-auto object-contain"
+                style={{ filter: "invert(1)" }}
+                onError={() => setLogoError(true)}
+              />
+            )}
           </div>
 
           {/* Nav */}
@@ -55,20 +72,24 @@ export default function FooterSection() {
             ))}
           </nav>
 
-          {/* Social links */}
-          <div className="flex gap-3">
-            {["Instagram", "LinkedIn", "Behance"].map((s) => (
-              <a
-                key={s}
-                href="#"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-800 border border-gray-700 text-gray-400 text-xs font-medium hover:bg-gray-700 hover:text-white hover:border-gray-500 transition-all"
-                aria-label={s}
-              >
-                <ExternalLink className="w-3 h-3" />
-                {s}
-              </a>
-            ))}
-          </div>
+          {/* Social links — only rendered when at least one URL is set */}
+          {socials.length > 0 && (
+            <div className="flex gap-3">
+              {socials.map(({ label, url }) => (
+                <a
+                  key={label}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-800 border border-gray-700 text-gray-400 text-xs font-medium hover:bg-gray-700 hover:text-white hover:border-gray-500 transition-all"
+                  aria-label={label}
+                >
+                  <ExternalLink className="w-3 h-3" />
+                  {label}
+                </a>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Bottom row */}

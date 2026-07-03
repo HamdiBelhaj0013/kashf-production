@@ -1,13 +1,16 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { Clapperboard, Mic2, PenTool, Monitor } from "lucide-react";
+import Image from "next/image";
 import { AnimatedSection, staggerContainer, staggerItem } from "@/components/AnimatedSection";
 import { motion } from "framer-motion";
 
 // ─── Orbital diagram (PROTECTED — structure preserved, emojis → Lucide icons) ──
 function OrbitalDiagram() {
   const t = useTranslations("About");
+  const [logoError, setLogoError] = useState(false);
 
   // angle 0 = top (Video), 90 = right (Audio), 180 = bottom (Design), 270 = left (Web)
   const nodes = [
@@ -35,19 +38,18 @@ function OrbitalDiagram() {
 
         {/* Center — logo or wordmark */}
         <div className="absolute inset-16 rounded-full bg-gradient-to-br from-gray-50 to-white border border-gray-100 shadow-inner flex items-center justify-center flex-col gap-1">
-          <img
-            src="/kashf version noir (1).png"
-            alt="Kashf"
-            className="w-20 h-auto object-contain"
-            onError={(e) => {
-              const el = e.currentTarget;
-              el.style.display = "none";
-              const span = document.createElement("span");
-              span.className = "font-black text-2xl tracking-tighter text-gray-900";
-              span.textContent = "K";
-              el.parentNode?.appendChild(span);
-            }}
-          />
+          {logoError ? (
+            <span className="font-black text-2xl tracking-tighter text-gray-900">K</span>
+          ) : (
+            <Image
+              src="/kashf version noir (1).png"
+              alt="Kashf Production logo"
+              width={413}
+              height={297}
+              className="w-20 h-auto object-contain"
+              onError={() => setLogoError(true)}
+            />
+          )}
           <span className="text-[8px] tracking-[0.3em] text-gray-400 font-bold uppercase">
             {t("orbitalProduction")}
           </span>

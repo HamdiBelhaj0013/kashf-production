@@ -1,4 +1,4 @@
-import { getProjects, getClients, getTeam } from "@/lib/api";
+import { getProjects, getClients, getTeam, getSocialLinks } from "@/lib/api";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -13,10 +13,11 @@ import ContactSection from "@/components/ContactSection";
 import FooterSection from "@/components/FooterSection";
 
 export default async function HomePage() {
-  const [projects, clients, team] = await Promise.all([
+  const [projects, clients, team, socialLinks] = await Promise.all([
     getProjects(),
     getClients(),
     getTeam(),
+    getSocialLinks(),
   ]);
 
   return (
@@ -34,7 +35,7 @@ export default async function HomePage() {
         <TeamSection team={team} />
         <ContactSection />
       </main>
-      <FooterSection />
+      <FooterSection socialLinks={socialLinks} />
     </>
   );
 }

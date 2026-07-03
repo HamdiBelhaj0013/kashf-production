@@ -2,10 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { db, settings } from "@/db";
 import { verifyApiAuth } from "@/lib/api-auth";
 
+// Public — footer and other public surfaces read settings without auth.
 export async function GET() {
-  const auth = await verifyApiAuth();
-  if ("error" in auth) return auth.error;
-
   const rows = await db.select().from(settings);
   return NextResponse.json(Object.fromEntries(rows.map((r) => [r.key, r.value])));
 }

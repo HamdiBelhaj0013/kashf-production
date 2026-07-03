@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { AnimatedSection } from "@/components/AnimatedSection";
+import Image from "next/image";
 import type { Project } from "@/data/projects";
 
 const FILTERS = ["all", "video", "audio", "design", "web", "pack"] as const;
@@ -26,6 +27,8 @@ export default function WorkSection({ projects }: { projects: Project[] }) {
     web: t("filterWeb"),
     pack: t("filterPack"),
   };
+
+  if (projects.length === 0) return null;
 
   return (
     <section id="projects" className="w-full bg-gray-50 py-28 scroll-m-20">
@@ -86,10 +89,13 @@ export default function WorkSection({ projects }: { projects: Project[] }) {
                 }`}
                 style={{ aspectRatio: p.featured ? "16/7" : "4/3" }}
               >
-                <img
-                  src={p.coverImage}
+                <Image
+                  src={p.coverImage || "/images/placeholder.png"}
                   alt={`${p.client} — ${p.title}`}
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                  priority={p.featured}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
