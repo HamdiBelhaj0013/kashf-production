@@ -16,7 +16,7 @@ export default function ProcessSection() {
   const t = useTranslations("Process");
 
   return (
-    <section className="w-full bg-gray-50 py-24">
+    <section className="w-full bg-gray-50 py-28">
       <div className="max-w-7xl mx-auto px-6">
         <AnimatedSection className="text-center mb-16">
           <p className="text-[10px] font-bold tracking-[0.3em] text-gray-400 uppercase mb-3">

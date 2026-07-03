@@ -45,10 +45,10 @@ export default function ContactSection({ socialLinks }: { socialLinks: SocialLin
   };
 
   const contactInfo = [
-    { Icon: Mail,      labelKey: "emailLabel"     as const, valueKey: "emailValue"     as const, href: "mailto:hello@kashf.tn" },
-    { Icon: MapPin,    labelKey: "locationLabel"  as const, valueKey: "locationValue"  as const, href: "#" },
-    { Icon: Languages, labelKey: "languagesLabel" as const, valueKey: "languagesValue" as const, href: "#" },
-    { Icon: Clock,     labelKey: "responseLabel"  as const, valueKey: "responseValue"  as const, href: "#" },
+    { Icon: Mail,      labelKey: "emailLabel"     as const, valueKey: "emailValue"     as const, href: "mailto:hello@kashf.tn" as string | null },
+    { Icon: MapPin,    labelKey: "locationLabel"  as const, valueKey: "locationValue"  as const, href: null },
+    { Icon: Languages, labelKey: "languagesLabel" as const, valueKey: "languagesValue" as const, href: null },
+    { Icon: Clock,     labelKey: "responseLabel"  as const, valueKey: "responseValue"  as const, href: null },
   ];
 
   const inputClass =
@@ -74,21 +74,32 @@ export default function ContactSection({ socialLinks }: { socialLinks: SocialLin
             </p>
 
             <div className="space-y-4 mb-10">
-              {contactInfo.map(({ Icon, labelKey, valueKey, href }) => (
-                <a key={labelKey} href={href} className="flex items-center gap-4 group">
-                  <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center shrink-0 group-hover:bg-gray-900 transition-all duration-300">
-                    <Icon className="w-4 h-4 text-gray-600 group-hover:text-white transition-colors duration-300" />
+              {contactInfo.map(({ Icon, labelKey, valueKey, href }) => {
+                const inner = (
+                  <>
+                    <div className="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center shrink-0 group-hover:bg-gray-900 transition-all duration-300">
+                      <Icon className="w-4 h-4 text-gray-600 group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-bold tracking-widest text-gray-400 uppercase">
+                        {t(labelKey)}
+                      </p>
+                      <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900 transition-colors">
+                        {t(valueKey)}
+                      </p>
+                    </div>
+                  </>
+                );
+                return href ? (
+                  <a key={labelKey} href={href} className="flex items-center gap-4 group">
+                    {inner}
+                  </a>
+                ) : (
+                  <div key={labelKey} className="flex items-center gap-4 group">
+                    {inner}
                   </div>
-                  <div>
-                    <p className="text-[10px] font-bold tracking-widest text-gray-400 uppercase">
-                      {t(labelKey)}
-                    </p>
-                    <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900 transition-colors">
-                      {t(valueKey)}
-                    </p>
-                  </div>
-                </a>
-              ))}
+                );
+              })}
             </div>
 
             {/* Social links — only rendered when at least one URL is set */}
