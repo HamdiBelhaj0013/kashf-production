@@ -53,14 +53,17 @@ export const team = pgTable("team", {
 });
 
 export const messages = pgTable("messages", {
-  id:        uuid("id").primaryKey().defaultRandom(),
-  name:      text("name").notNull(),
-  email:     text("email").notNull(),
-  service:   text("service").notNull().default(""),
-  message:   text("message").notNull(),
-  read:      boolean("read").notNull().default(false),
-  archived:  boolean("archived").notNull().default(false),
-  createdAt: timestamp("created_at").defaultNow(),
+  id:           uuid("id").primaryKey().defaultRandom(),
+  name:         text("name").notNull(),
+  email:        text("email").notNull(),
+  service:      text("service").notNull().default(""),
+  message:      text("message").notNull(),
+  read:         boolean("read").notNull().default(false),
+  archived:     boolean("archived").notNull().default(false),
+  createdAt:    timestamp("created_at").defaultNow(),
+  repliedAt:    timestamp("replied_at"),
+  replyMessage: text("reply_message"),
+  repliedBy:    text("replied_by"),
 });
 
 export const settings = pgTable("settings", {

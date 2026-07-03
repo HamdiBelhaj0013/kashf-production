@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Trash2, Eye, Inbox } from "lucide-react";
+import { Trash2, Eye, Inbox, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import ConfirmDialog from "./ConfirmDialog";
 import AdminToast from "./AdminToast";
@@ -14,6 +14,7 @@ interface Message {
   service: string;
   read: boolean;
   createdAt: Date | string | null;
+  repliedAt?: Date | string | null;
 }
 
 export default function MessagesTable({ messages: initial }: { messages: Message[] }) {
@@ -21,7 +22,11 @@ export default function MessagesTable({ messages: initial }: { messages: Message
   const [rows, setRows] = useState(initial);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [confirmId, setConfirmId] = useState<string | null>(null);
-  const [toast, setToast] = useState<{ visible: boolean; message: string; type: "success" | "error" }>({ visible: false, message: "", type: "success" });
+  const [toast, setToast] = useState<{
+    visible: boolean;
+    message: string;
+    type: "success" | "error";
+  }>({ visible: false, message: "", type: "success" });
 
   function showToast(message: string, type: "success" | "error" = "success") {
     setToast({ visible: true, message, type });
@@ -78,24 +83,39 @@ export default function MessagesTable({ messages: initial }: { messages: Message
                 onClick={() => router.push(`/kashfoffice/messages/${m.id}`)}
               >
                 <td className="px-6 py-4">
-                  <div className={`w-2 h-2 rounded-full ${m.read ? "bg-gray-200" : "bg-gray-900"}`} />
+                  <div
+                    className={`w-2 h-2 rounded-full ${m.read ? "bg-gray-200" : "bg-gray-900"}`}
+                  />
                 </td>
                 <td className="px-6 py-4">
-                  <span className={m.read ? "text-gray-600" : "font-medium text-gray-900"}>{m.name}</span>
+                  <span
+                    className={m.read ? "text-gray-600" : "font-medium text-gray-900"}
+                  >
+                    {m.name}
+                  </span>
                 </td>
                 <td className="px-6 py-4 text-gray-500">{m.email}</td>
                 <td className="px-6 py-4 text-gray-500">{m.service || "—"}</td>
                 <td className="px-6 py-4 text-gray-400 text-xs">
                   {m.createdAt
                     ? new Date(m.createdAt).toLocaleDateString("en-GB", {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    })
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      })
                     : "—"}
                 </td>
                 <td className="px-6 py-4" onClick={(e) => e.stopPropagation()}>
                   <div className="flex items-center gap-2 justify-end">
+                    {m.repliedAt && (
+                      <span
+                        title={`Replied on ${new Date(m.repliedAt).toLocaleDateString("en-GB")}`}
+                        className="flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-500 text-[11px] font-medium rounded-full"
+                      >
+                        <CheckCircle2 className="w-3 h-3 text-gray-400" />
+                        Replied
+                      </span>
+                    )}
                     <Link
                       href={`/kashfoffice/messages/${m.id}`}
                       className="p-2 text-gray-400 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-all"
@@ -124,7 +144,10 @@ export default function MessagesTable({ messages: initial }: { messages: Message
         onConfirm={() => confirmId && handleDelete(confirmId)}
         onCancel={() => setConfirmId(null)}
       />
-      <AdminToast {...toast} onHide={() => setToast((t) => ({ ...t, visible: false }))} />
+      <AdminToast
+        {...toast}
+        onHide={() => setToast((t) => ({ ...t, visible: false }))}
+      />
     </>
   );
 }

@@ -76,6 +76,9 @@ export default async function MessageDetailPage({
           email={msg.email}
           name={msg.name}
           archived={msg.archived}
+          originalMessage={msg.message}
+          repliedAt={msg.repliedAt ?? null}
+          repliedBy={msg.repliedBy ?? null}
         />
       </div>
     </AdminShell>
