@@ -33,7 +33,7 @@ export default async function HomePage() {
         <WhyUsSection />
         <ProcessSection />
         <TeamSection team={team} />
-        <ContactSection />
+        <ContactSection socialLinks={socialLinks} />
       </main>
       <FooterSection socialLinks={socialLinks} />
     </>

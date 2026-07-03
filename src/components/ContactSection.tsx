@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Mail, MapPin, Languages, Clock, Send, CheckCircle2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AnimatedSection } from "@/components/AnimatedSection";
+import type { SocialLinks } from "@/lib/api";
 
 const formVariants = {
   hidden:  { opacity: 0, y: 24 },
@@ -12,7 +13,7 @@ const formVariants = {
   exit:    { opacity: 0, y: -16, transition: { duration: 0.25 } },
 };
 
-export default function ContactSection() {
+export default function ContactSection({ socialLinks }: { socialLinks: SocialLinks }) {
   const t = useTranslations("Contact");
   const [form, setForm] = useState({ name: "", email: "", service: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
@@ -90,30 +91,39 @@ export default function ContactSection() {
               ))}
             </div>
 
-            {/* Social links */}
-            <div>
-              <p className="text-[10px] font-bold tracking-[0.25em] text-gray-400 uppercase mb-4">
-                {t("followAlong")}
-              </p>
-              <div className="flex gap-3">
-                {[
-                  { name: "Instagram", handle: "@kashf.production" },
-                  { name: "LinkedIn",  handle: "Kashf Production"  },
-                  { name: "Behance",   handle: "kashfpro"          },
-                ].map((s) => (
-                  <a
-                    key={s.name}
-                    href="#"
-                    className="flex-1 p-3 rounded-xl bg-gray-50 border border-gray-100 hover:border-gray-300 hover:bg-white transition-all text-center group"
-                  >
-                    <div className="text-xs font-bold text-gray-900 group-hover:text-gray-700">
-                      {s.name}
-                    </div>
-                    <div className="text-[10px] text-gray-400 mt-0.5">{s.handle}</div>
-                  </a>
-                ))}
-              </div>
-            </div>
+            {/* Social links — only rendered when at least one URL is set */}
+            {(() => {
+              const socials = [
+                { name: "Instagram", url: socialLinks.instagram },
+                { name: "LinkedIn",  url: socialLinks.linkedin  },
+                { name: "Behance",   url: socialLinks.behance   },
+              ].filter((s) => s.url.trim() !== "");
+
+              if (socials.length === 0) return null;
+
+              return (
+                <div>
+                  <p className="text-[10px] font-bold tracking-[0.25em] text-gray-400 uppercase mb-4">
+                    {t("followAlong")}
+                  </p>
+                  <div className="flex gap-3">
+                    {socials.map((s) => (
+                      <a
+                        key={s.name}
+                        href={s.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 p-3 rounded-xl bg-gray-50 border border-gray-100 hover:border-gray-300 hover:bg-white transition-all text-center group"
+                      >
+                        <div className="text-xs font-bold text-gray-900 group-hover:text-gray-700">
+                          {s.name}
+                        </div>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
           </AnimatedSection>
 
           {/* ── Right: form ─────────────────────────────────────────────── */}
