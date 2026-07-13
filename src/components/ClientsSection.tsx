@@ -11,13 +11,13 @@ function ClientLogoItem({ client }: { client: Client }) {
 
   if (client.logo && !imgError) {
     return (
-      <div className="flex items-center justify-center h-12 w-32 flex-shrink-0 cursor-default select-none">
+      <div className="flex items-center justify-center h-14 w-36 flex-shrink-0 cursor-default select-none bg-gray-100 rounded-xl px-4 py-2">
         <Image
           src={client.logo}
           alt={client.name}
           width={120}
           height={48}
-          className="object-contain max-h-12 w-auto grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+          className="object-contain max-h-10 w-auto grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
           onError={() => setImgError(true)}
         />
       </div>

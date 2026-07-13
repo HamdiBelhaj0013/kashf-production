@@ -3,15 +3,13 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
-import { AnimatedSection } from "@/components/AnimatedSection";
 import Image from "next/image";
-import { Link } from "@/i18n/routing";
 import type { Project } from "@/data/projects";
 
 const FILTERS = ["all", "video", "audio", "design", "web", "pack"] as const;
 type Filter = (typeof FILTERS)[number];
 
-export default function WorkSection({ projects }: { projects: Project[] }) {
+export default function ProjectsGrid({ projects }: { projects: Project[] }) {
   const t = useTranslations("Projects");
   const [active, setActive] = useState<Filter>("all");
 
@@ -29,49 +27,28 @@ export default function WorkSection({ projects }: { projects: Project[] }) {
     pack: t("filterPack"),
   };
 
-  if (projects.length === 0) return null;
-
   return (
-    <section id="projects" className="w-full bg-gray-50 py-28 scroll-m-20">
-      <div className="max-w-7xl mx-auto px-6">
-        <AnimatedSection>
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12">
-            <div>
-              <p className="text-[10px] font-bold tracking-[0.3em] text-gray-400 uppercase mb-3">
-                {t("label")}
-              </p>
-              <h2 className="text-4xl md:text-5xl font-black tracking-tight text-gray-900">
-                {t("title")}
-              </h2>
-            </div>
-            <Link
-              href="/projects"
-              className="text-sm text-gray-500 hover:text-gray-900 transition-colors group flex items-center gap-1 self-end"
-            >
-              {t("seeAll")}
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
-            </Link>
-          </div>
+    <>
+      {/* Filter bar */}
+      <div className="flex flex-wrap gap-2 mb-10">
+        {FILTERS.map((f) => (
+          <button
+            key={f}
+            onClick={() => setActive(f)}
+            className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all ${
+              active === f
+                ? "bg-gray-900 text-white shadow-sm"
+                : "bg-white border border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-700"
+            }`}
+          >
+            {filterLabels[f]}
+          </button>
+        ))}
+      </div>
 
-          {/* Filter bar */}
-          <div className="flex flex-wrap gap-2 mb-10">
-            {FILTERS.map((f) => (
-              <button
-                key={f}
-                onClick={() => setActive(f)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all ${
-                  active === f
-                    ? "bg-gray-900 text-white shadow-sm"
-                    : "bg-white border border-gray-200 text-gray-500 hover:border-gray-400 hover:text-gray-700"
-                }`}
-              >
-                {filterLabels[f]}
-              </button>
-            ))}
-          </div>
-        </AnimatedSection>
-
-        {/* Project grid with AnimatePresence */}
+      {filtered.length === 0 ? (
+        <p className="text-center text-gray-400 py-24 text-sm">—</p>
+      ) : (
         <motion.div
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
@@ -96,7 +73,6 @@ export default function WorkSection({ projects }: { projects: Project[] }) {
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                   sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-                  priority={p.featured}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
@@ -135,7 +111,7 @@ export default function WorkSection({ projects }: { projects: Project[] }) {
             ))}
           </AnimatePresence>
         </motion.div>
-      </div>
-    </section>
+      )}
+    </>
   );
 }
