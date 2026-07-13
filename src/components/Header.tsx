@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
+import { Link, usePathname } from "@/i18n/routing";
 import { Menu, X, ArrowRight } from "lucide-react";
 import Image from "next/image";
 
@@ -15,6 +15,9 @@ const LOGO_H = 297;
 
 export default function Header() {
   const t = useTranslations();
+  const pathname = usePathname(); // locale-stripped: "/" on homepage, "/projects" on subpages
+  const isHome = pathname === "/";
+
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<NavLink | null>(null);
@@ -27,8 +30,9 @@ export default function Header() {
     return () => window.removeEventListener("scroll", h);
   }, []);
 
-  // Scroll spy with IntersectionObserver
+  // Scroll spy — only meaningful on the homepage where these sections exist
   useEffect(() => {
+    if (!isHome) return;
     const observers: IntersectionObserver[] = [];
     NAV_LINKS.forEach((id) => {
       const el = document.getElementById(id);
@@ -43,7 +47,12 @@ export default function Header() {
       observers.push(obs);
     });
     return () => observers.forEach((o) => o.disconnect());
-  }, []);
+  }, [isHome]);
+
+  // href for a section anchor: in-page when on homepage, cross-page otherwise
+  function sectionHref(id: string) {
+    return isHome ? `#${id}` : (`/#${id}` as "/");
+  }
 
   return (
     <header
@@ -54,8 +63,8 @@ export default function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        {/* Logo */}
-        <a href="#" className="flex items-center gap-2 shrink-0">
+        {/* Logo — always navigates to the homepage */}
+        <Link href="/" className="flex items-center gap-2 shrink-0">
           {logoError ? (
             <div className="flex items-center gap-1.5">
               <span className="font-black text-xl tracking-tighter text-gray-900">KASHF</span>
@@ -72,16 +81,16 @@ export default function Header() {
               onError={() => setLogoError(true)}
             />
           )}
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-gray-500">
           {NAV_LINKS.map((s) => (
-            <a
+            <Link
               key={s}
-              href={`#${s}`}
+              href={sectionHref(s)}
               className={`relative group transition-colors capitalize ${
-                activeSection === s
+                isHome && activeSection === s
                   ? "text-gray-900 font-semibold"
                   : "hover:text-gray-900"
               }`}
@@ -89,10 +98,10 @@ export default function Header() {
               {t(`Navigation.${s}`)}
               <span
                 className={`absolute -bottom-0.5 left-0 h-px bg-gray-900 transition-all duration-300 ${
-                  activeSection === s ? "w-full" : "w-0 group-hover:w-full"
+                  isHome && activeSection === s ? "w-full" : "w-0 group-hover:w-full"
                 }`}
               />
-            </a>
+            </Link>
           ))}
 
           {/* Language switcher */}
@@ -104,13 +113,13 @@ export default function Header() {
             <Link href="/" locale="ar" className="hover:text-gray-900 transition-colors">AR</Link>
           </div>
 
-          <a
-            href="#contact"
+          <Link
+            href={sectionHref("contact")}
             className="ml-1 inline-flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white text-xs font-bold rounded-full hover:bg-gray-700 transition-all tracking-wide shadow-sm hover:shadow-md hover:-translate-y-0.5"
           >
             {t("Navigation.startProject")}
             <ArrowRight className="w-3.5 h-3.5" />
-          </a>
+          </Link>
         </nav>
 
         {/* Mobile hamburger */}
@@ -136,24 +145,24 @@ export default function Header() {
           </button>
 
           {NAV_LINKS.map((s) => (
-            <a
+            <Link
               key={s}
-              href={`#${s}`}
+              href={sectionHref(s)}
               className="text-3xl font-black text-white hover:text-gray-300 transition-colors capitalize tracking-tight"
               onClick={() => setMenuOpen(false)}
             >
               {t(`Navigation.${s}`)}
-            </a>
+            </Link>
           ))}
 
-          <a
-            href="#contact"
+          <Link
+            href={sectionHref("contact")}
             className="mt-2 inline-flex items-center gap-2 px-8 py-3 bg-white text-gray-900 font-bold rounded-full text-sm hover:bg-gray-100 transition-colors"
             onClick={() => setMenuOpen(false)}
           >
             {t("Navigation.startProject")}
             <ArrowRight className="w-4 h-4" />
-          </a>
+          </Link>
 
           <div className="flex gap-6 text-sm font-bold tracking-widest text-gray-500">
             <Link href="/" locale="en" onClick={() => setMenuOpen(false)} className="hover:text-white transition-colors">EN</Link>
