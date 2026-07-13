@@ -21,8 +21,19 @@ export default function ImageUpload({ value, onChange, label }: ImageUploadProps
       const fd = new FormData();
       fd.append("file", file);
       const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
+      if (!res.ok) {
+        let message = "Upload failed";
+        try {
+          const data = await res.json();
+          message = data.error || message;
+        } catch {
+          const text = await res.text().catch(() => "");
+          console.error("Upload error response (non-JSON):", res.status, text);
+          message = `Upload failed (HTTP ${res.status})`;
+        }
+        throw new Error(message);
+      }
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Upload failed");
       onChange(data.url);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Upload failed");

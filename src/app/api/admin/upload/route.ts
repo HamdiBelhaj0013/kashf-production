@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
+import { put } from "@vercel/blob";
 import { v4 as uuidv4 } from "uuid";
 import { verifyApiAuth } from "@/lib/api-auth";
 
@@ -27,11 +26,13 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const ext = file.type.split("/")[1].replace("jpeg", "jpg");
-  const filename = `${uuidv4()}.${ext}`;
-  const dir = path.join(process.cwd(), "public", "uploads");
-  await mkdir(dir, { recursive: true });
-  await writeFile(path.join(dir, filename), Buffer.from(await file.arrayBuffer()));
-
-  return NextResponse.json({ url: `/uploads/${filename}` });
+  try {
+    const ext = file.type.split("/")[1].replace("jpeg", "jpg");
+    const filename = `uploads/${uuidv4()}.${ext}`;
+    const blob = await put(filename, file, { access: "public" });
+    return NextResponse.json({ url: blob.url });
+  } catch (err) {
+    console.error("Upload error:", err);
+    return NextResponse.json({ error: "Upload failed" }, { status: 500 });
+  }
 }
