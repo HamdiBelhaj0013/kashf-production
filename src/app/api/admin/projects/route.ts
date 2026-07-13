@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
   if ("error" in auth) return auth.error;
 
   const body = await req.json();
-  const { title, client, category, year, tags, coverImage, featured, sortOrder } = body;
+  const { title, client, category, year, tags, coverImage, link, featured, sortOrder } = body;
 
   if (!title || !client || !category || !year) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -33,6 +33,7 @@ export async function POST(req: NextRequest) {
       year,
       tags: JSON.stringify(tags || []),
       coverImage: coverImage || "",
+      link: link || null,
       featured: featured || false,
       sortOrder: sortOrder || 0,
     })

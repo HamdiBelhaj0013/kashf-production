@@ -6,6 +6,7 @@ export interface Project {
   year: string;
   tags: string[];
   coverImage: string;
+  link?: string | null;
   featured: boolean;
 }
 

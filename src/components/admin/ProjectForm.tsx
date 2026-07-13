@@ -15,6 +15,7 @@ interface Project {
   year: string;
   tags: string[];
   coverImage: string;
+  link?: string | null;
   featured: boolean;
   sortOrder: number;
 }
@@ -36,6 +37,7 @@ export default function ProjectForm({ initialData }: { initialData?: Project }) 
     year:       initialData?.year       || String(currentYear),
     tags:       initialData?.tags       || ([] as string[]),
     coverImage: initialData?.coverImage || "",
+    link:       initialData?.link       || "",
     featured:   initialData?.featured   || false,
     sortOrder:  initialData?.sortOrder  || 0,
   });
@@ -152,6 +154,20 @@ export default function ProjectForm({ initialData }: { initialData?: Project }) 
           value={form.coverImage}
           onChange={(url) => setForm((s) => ({ ...s, coverImage: url }))}
         />
+
+        <div>
+          <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">
+            Project Link <span className="font-normal normal-case text-gray-400">(optional)</span>
+          </label>
+          <input
+            type="url"
+            value={form.link}
+            onChange={(e) => setForm((s) => ({ ...s, link: e.target.value }))}
+            placeholder="https://example.com"
+            className={inputClass}
+          />
+          <p className="text-[11px] text-gray-400 mt-1">If set, clicking the card on the site opens this URL in a new tab.</p>
+        </div>
 
         <div className="grid grid-cols-2 gap-4">
           <div>

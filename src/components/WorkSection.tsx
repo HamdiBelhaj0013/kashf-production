@@ -131,6 +131,15 @@ export default function WorkSection({ projects }: { projects: Project[] }) {
                     ))}
                   </div>
                 </div>
+                {p.link && (
+                  <a
+                    href={p.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute inset-0"
+                    aria-label={`${p.title} — ${p.client}`}
+                  />
+                )}
               </motion.div>
             ))}
           </AnimatePresence>

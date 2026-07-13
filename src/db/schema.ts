@@ -22,6 +22,7 @@ export const projects = pgTable("projects", {
   year:       text("year").notNull(),
   tags:       text("tags").notNull().default("[]"),
   coverImage: text("cover_image").notNull().default(""),
+  link:       text("link"),
   featured:   boolean("featured").notNull().default(false),
   sortOrder:  integer("sort_order").notNull().default(0),
   createdAt:  timestamp("created_at").defaultNow(),

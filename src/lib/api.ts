@@ -15,6 +15,7 @@ export async function getProjects(): Promise<Project[]> {
       year:       r.year,
       tags:       JSON.parse(r.tags || "[]") as string[],
       coverImage: r.coverImage,
+      link:       r.link ?? null,
       featured:   r.featured,
     }));
   } catch {
